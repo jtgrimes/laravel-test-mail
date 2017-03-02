@@ -1,0 +1,25 @@
+{
+    "name": "jtgrimes/test-mail",
+    "description": "A Laravel package for functionally testing email",
+    "type": "library",
+    "keywords": ["framework", "laravel"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "J.T. Grimes",
+            "email": "jtgrimes@gmail.com"
+        }
+    ],
+    "require": {
+        "illuminate/support": "5.*",
+        "illuminate/mail": "5.*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "JTGrimes\\TestMail\\": "app/"
+        }
+    }
+}
