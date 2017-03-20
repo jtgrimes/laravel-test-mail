@@ -17,7 +17,7 @@ class TestMailServiceProvider extends MailServiceProvider
 
     private function registerTestSwiftMailer()
     {
-        $this->app['swift.mailer'] = $this->app->share(function ($app) {
+        $this->app->bind('swift.mailer', function ($app) {
             return new \Swift_Mailer(
                 new TestTransport(
                     $app->make(LoggerInterface::class),
