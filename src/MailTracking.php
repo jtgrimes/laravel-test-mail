@@ -148,7 +148,7 @@ trait MailTracking
      * Assert that the specified number of emails have been sent to the specified recipient
      *
      * @param string $recipient
-     * @return int
+     * @return $this
      */
     protected function seeEmailsTo($recipient, $count)
     {
@@ -158,7 +158,8 @@ trait MailTracking
                 $sent++;
             }
         }
-        return $this->assertEquals($count, $sent);
+        $this->assertEquals($count, $sent);
+		return $this;
     }
 
     /**
