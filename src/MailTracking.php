@@ -11,6 +11,7 @@ trait MailTracking
      * Delivered emails.
      */
     protected $emails = [];
+
     /**
      * Register a listener for new emails.
      * Reminder: the "before" tag below tells PHPUnit to run this method before each test if this
@@ -23,24 +24,22 @@ trait MailTracking
         Mail::getSwiftMailer()
             ->registerPlugin(new TestingMailEventListener($this));
     }
+
     /**
      * Assert that at least one email was sent.
      */
     protected function seeEmailWasSent()
     {
-        $this->assertNotEmpty(
-            $this->emails, 'No emails have been sent.'
-        );
+        $this->assertNotEmpty($this->emails, 'No emails have been sent.');
         return $this;
     }
+
     /**
      * Assert that no emails were sent.
      */
     protected function seeEmailWasNotSent()
     {
-        $this->assertEmpty(
-            $this->emails, 'Did not expect any emails to have been sent.'
-        );
+        $this->assertEmpty($this->emails, 'Did not expect any emails to have been sent.');
         return $this;
     }
 
@@ -54,7 +53,8 @@ trait MailTracking
     {
         $emailsSent = count($this->emails);
         $this->assertCount(
-            $count, $this->emails,
+            $count,
+            $this->emails,
             "Expected $count emails to have been sent, but $emailsSent were."
         );
         return $this;
@@ -70,7 +70,8 @@ trait MailTracking
     protected function seeEmailEquals($body, Swift_Message $message = null)
     {
         $this->assertEquals(
-            $body, $this->getEmail($message)->getBody(),
+            $body,
+            $this->getEmail($message)->getBody(),
             "No email with the provided body was sent."
         );
         return $this;
@@ -86,7 +87,8 @@ trait MailTracking
     protected function seeEmailContains($excerpt, Swift_Message $message = null)
     {
         $this->assertContains(
-            $excerpt, $this->getEmail($message)->getBody(),
+            $excerpt,
+            $this->getEmail($message)->getBody(),
             "No email containing the provided body was found."
         );
         return $this;
@@ -118,7 +120,7 @@ trait MailTracking
     protected function seeAnyEmailSubjectContains($subject)
     {
         $found = false;
-        for ($i = 0; $i < count($this->emails); $i++){
+        for ($i = 0; $i < count($this->emails); $i++) {
             if (strpos($this->emails[$i]->getSubject(), $subject) !== false) {
                 $found = true;
             }
@@ -138,7 +140,8 @@ trait MailTracking
     protected function seeEmailTo($recipient, Swift_Message $message = null)
     {
         $this->assertArrayHasKey(
-            $recipient, (array) $this->getEmail($message)->getTo(),
+            $recipient,
+            (array) $this->getEmail($message)->getTo(),
             "No email was sent to $recipient."
         );
         return $this;
@@ -159,7 +162,7 @@ trait MailTracking
             }
         }
         $this->assertEquals($count, $sent);
-		return $this;
+        return $this;
     }
 
     /**
@@ -172,7 +175,8 @@ trait MailTracking
     protected function seeEmailFrom($sender, Swift_Message $message = null)
     {
         $this->assertArrayHasKey(
-            $sender, (array) $this->getEmail($message)->getFrom(),
+            $sender,
+            (array) $this->getEmail($message)->getFrom(),
             "No email was sent from $sender."
         );
         return $this;
@@ -216,7 +220,7 @@ trait MailTracking
     public function getEmailContainingSubject($subject)
     {
         $found = -1;
-        for ($i = 0; $i < count($this->emails); $i++){
+        for ($i = 0; $i < count($this->emails); $i++) {
             if (strpos($this->emails[$i]->getSubject(), $subject) !== false) {
                 $found = $i;
             }
@@ -228,10 +232,15 @@ trait MailTracking
         return $this->emails[$found];
     }
 
+    /**
+     * Get the first email to a given recipient
+     * @param $recipient
+     * @return mixed
+     */
     public function getEmailTo($recipient)
     {
         $found = -1;
-        for ($i = 0; $i < count($this->emails); $i++){
+        for ($i = 0; $i < count($this->emails); $i++) {
             $recipients = (array) $this->emails[$i]->getTo();
             if (array_key_exists($recipient, $recipients)) {
                 $found = $i;

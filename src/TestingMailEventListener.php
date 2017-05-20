@@ -8,7 +8,7 @@ class TestingMailEventListener implements Swift_Events_EventListener
 
     /**
      * TestingMailEventListener constructor.
-     * @param $test will be the test class that is using the MailTracking trait
+     * @param $test mixed will be the test class that is using the MailTracking trait
      */
     public function __construct($test)
     {

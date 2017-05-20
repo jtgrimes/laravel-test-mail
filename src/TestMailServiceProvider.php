@@ -21,7 +21,9 @@ class TestMailServiceProvider extends MailServiceProvider
             return new \Swift_Mailer(
                 new TestTransport(
                     $app->make(LoggerInterface::class),
-                    $app->make(Filesystem::class)
+                    $app->make(Filesystem::class),
+                    $app['config']['mail.preview_path'],
+                    $app['config']['mail.preview_lifetime']
                 )
             );
         });
