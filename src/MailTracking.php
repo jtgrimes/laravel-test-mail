@@ -94,6 +94,25 @@ trait MailTracking
         return $this;
     }
 
+
+    /**
+     * Assert that the last email's body does not contain the given text.
+     *
+     * @param string $excerpt
+     * @param Swift_Message $message
+     * @return $this
+     */
+    protected function seeEmailNotContains($excerpt, Swift_Message $message = null)
+    {
+        $this->assertNotContains(
+            $excerpt,
+            $this->getEmail($message)->getBody(),
+            "The text was found in the email"
+        );
+        return $this;
+    }
+
+
     /**
      * Assert that the last email's subject matches the given string.
      *
@@ -107,6 +126,23 @@ trait MailTracking
             $subject,
             $this->getEmail($message)->getSubject(),
             "No email with a subject of $subject was found."
+        );
+        return $this;
+    }
+
+    /**
+     * Assert that the last email's subject matches the given string.
+     *
+     * @param string $subject
+     * @param Swift_Message $message
+     * @return $this
+     */
+    protected function seeEmailSubjectNotContains($subject, Swift_Message $message = null)
+    {
+        $this->assertNotContains(
+            $subject,
+            $this->getEmail($message)->getSubject(),
+            "The email subject does contain '$subject'."
         );
         return $this;
     }
